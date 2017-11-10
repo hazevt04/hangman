@@ -21,7 +21,7 @@ all: default
 # automagically include all .c and *.h files 
 # in current directory
 OBJECTS = $(patsubst %.c, %.o, $(wildcard *.c))
-HEADERS = $(wildcard *.h) ../../my_util.h
+HEADERS = $(wildcard *.h)
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -32,7 +32,7 @@ HEADERS = $(wildcard *.h) ../../my_util.h
 .PRECIOUS: $(TARGET_EXEC) $(OBJECTS)
 
 $(TARGET_EXEC): $(OBJECTS)
-	$(CC) $(OBJECTS) $(LIBS) -o $@
+	$(CC) $(OBJECTS) $(LIBS) -o $@ -lgsl -lgslcblas
 
 clean: clean_player_data
 	-rm -f *.o
