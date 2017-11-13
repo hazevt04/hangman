@@ -319,6 +319,7 @@ void get_secret_word( char* secret_word, char* file_name, unsigned int seed ) {
    HDEBUG_PRINTF( "Inside %s(): Shhh... The secret word is %s\n", 
          __func__, secret_word ); 
 
+   gsl_rng_free( rng );
 } // end of get_secret_word
 
 
