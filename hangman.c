@@ -93,7 +93,7 @@ int check_guess( hangman_char_t *hm_chars, int* match_indices, int num_chars,
    }
 
    HDEBUG_PRINTF( "Inside %s(): %d New Matches Found for %c\n", 
-		__func__, num_matches, guess_char ); 
+    __func__, num_matches, guess_char ); 
    return num_matches; 
 
 } // end of check_guess
@@ -271,12 +271,12 @@ void get_secret_word( char* secret_word, char* file_name, unsigned int seed ) {
   
    int secret_line_valid = 0;
    int num_bad_lines = 0;
-	gsl_rng *rng = gsl_rng_alloc( gsl_rng_taus2 );
-	gsl_rng_set( rng, time( NULL ) );
+   gsl_rng *rng = gsl_rng_alloc( gsl_rng_taus2 );
+   gsl_rng_set( rng, time( NULL ) );
 
    while ( !secret_line_valid ) {
-		secret_line_num = gsl_rng_uniform_int( rng, num_file_lines );
-		
+      secret_line_num = gsl_rng_uniform_int( rng, num_file_lines );
+
       HDEBUG_PRINTF( "seed is %u\n", seed );
       HDEBUG_PRINTF( "secret_line_num is %d\n", secret_line_num );
       
@@ -334,7 +334,7 @@ void save_guess( char** prev_guesses, char* guess_line, int guess_line_len, int 
       
             __func__, i, guess_line[i] );
       
-      prev_guesses[num_guesses][i] = guess_line[i];		
+      prev_guesses[num_guesses][i] = guess_line[i];
       
       HDEBUG_PRINTF( "Inside %s():\tprev_guesses[%d][%d] = %c\n",
          __func__, num_guesses, i, prev_guesses[num_guesses][i] );
