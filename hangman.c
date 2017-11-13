@@ -271,12 +271,10 @@ void get_secret_word( char* secret_word, char* file_name, unsigned int seed ) {
   
    int secret_line_valid = 0;
    int num_bad_lines = 0;
-   //srand( seed );
 	gsl_rng *rng = gsl_rng_alloc( gsl_rng_taus2 );
 	gsl_rng_set( rng, time( NULL ) );
 
    while ( !secret_line_valid ) {
-      //secret_line_num = rand() % num_file_lines;
 		secret_line_num = gsl_rng_uniform_int( rng, num_file_lines );
 		
       HDEBUG_PRINTF( "seed is %u\n", seed );

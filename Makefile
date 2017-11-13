@@ -52,7 +52,3 @@ check:
 	echo "HEADERS are $(HEADERS)"
 
 
-get_gsl_rng:
-	sudo apt-get install libgsl-dev
-	sudo apt-get install libgsl-dbg
-
