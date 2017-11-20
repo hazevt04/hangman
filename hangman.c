@@ -4,8 +4,12 @@
 #include <string.h>
 #include <unistd.h>
 #include <ctype.h>
-#include <time.h>
 #include <errno.h>
+#include <time.h>
+#include <gsl/gsl_rng.h>
+#include <gsl/gsl_randist.h>
+
+
 #include "my_util.h"
 
 #include "hangman.h"
@@ -89,7 +93,7 @@ int check_guess( hangman_char_t *hm_chars, int* match_indices, int num_chars,
    }
 
    HDEBUG_PRINTF( "Inside %s(): %d New Matches Found for %c\n", 
-		__func__, num_matches, guess_char ); 
+    __func__, num_matches, guess_char ); 
    return num_matches; 
 
 } // end of check_guess
@@ -167,12 +171,12 @@ void print_hangman_figure_line( int score, int figure_line ) {
 // bumber of guesses,
 // and
 // all of your previous guesses
-void print_hangman_state( int secret_word_len, hangman_char_t* hm_chars, 
+void print_hangman_state( char *file_name, int secret_word_len, hangman_char_t* hm_chars, 
       int score, char **prev_guesses ) {
    
    // Output Line 0
    print_hangman_figure_line( score, 0 );
-   printf( "%d letters.",  secret_word_len );
+   printf( "Category %s- %d letters.", file_name, secret_word_len );
    printf( "\n" ); 
       
    // Output Line 1
@@ -222,7 +226,34 @@ int is_secret_line_valid( char *secret_line ) {
 } // end of is_secret_line_valid()
 
 
-// Uses rand() after it is seeded to select a line number in file_name
+
+// Uses gsl_rand to select word file
+void get_file_name( char* file_name, unsigned int seed ) {
+   
+   assert( file_name != NULL );
+
+   gsl_rng *rng = gsl_rng_alloc( gsl_rng_taus );
+
+   sprintf( filenames[0], "%s/.inputfiles/cars.txt", getenv( "PWD" ) );
+   sprintf( filenames[1], "%s/.inputfiles/classroom.txt", getenv( "PWD" ) );
+   sprintf( filenames[2], "%s/.inputfiles/kitchen.txt", getenv( "PWD" ) );
+   sprintf( filenames[3], "%s/.inputfiles/fruits.txt", getenv( "PWD" ) );
+   sprintf( filenames[4], "%s/.inputfiles/candy.txt", getenv( "PWD" ) ); 
+
+   int rand_index;
+
+   gsl_rng_set( rng, time( NULL ) );
+
+   rand_index = gsl_rng_uniform_int( rng, NUM_FILES );
+   printf( "Index is %d\n", rand_index );  
+   strcpy( file_name, filenames[rand_index] ); 
+   HDEBUG_PRINTF( "Selected random filename is %s.\n", file_name ); 
+   printf( "Selected random filename is %s.\n", file_name ); 
+
+}
+
+
+// Uses gsl_rand() after it is seeded to select a line number in file_name
 // to ve the secret word. Sets a pointer to a character array of that word
 void get_secret_word( char* secret_word, char* file_name, unsigned int seed ) {
 
@@ -267,9 +298,11 @@ void get_secret_word( char* secret_word, char* file_name, unsigned int seed ) {
   
    int secret_line_valid = 0;
    int num_bad_lines = 0;
-   srand( seed );
+   gsl_rng *rng = gsl_rng_alloc( gsl_rng_taus2 );
+   gsl_rng_set( rng, time( NULL ) );
+
    while ( !secret_line_valid ) {
-      secret_line_num = rand() % num_file_lines;
+      secret_line_num = gsl_rng_uniform_int( rng, num_file_lines );
 
       HDEBUG_PRINTF( "seed is %u\n", seed );
       HDEBUG_PRINTF( "secret_line_num is %d\n", secret_line_num );
@@ -313,6 +346,7 @@ void get_secret_word( char* secret_word, char* file_name, unsigned int seed ) {
    HDEBUG_PRINTF( "Inside %s(): Shhh... The secret word is %s\n", 
          __func__, secret_word ); 
 
+   gsl_rng_free( rng );
 } // end of get_secret_word
 
 
@@ -328,7 +362,7 @@ void save_guess( char** prev_guesses, char* guess_line, int guess_line_len, int 
       
             __func__, i, guess_line[i] );
       
-      prev_guesses[num_guesses][i] = guess_line[i];		
+      prev_guesses[num_guesses][i] = guess_line[i];
       
       HDEBUG_PRINTF( "Inside %s():\tprev_guesses[%d][%d] = %c\n",
          __func__, num_guesses, i, prev_guesses[num_guesses][i] );

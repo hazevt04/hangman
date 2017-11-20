@@ -32,7 +32,8 @@ HEADERS = $(wildcard *.h) ../../my_util.h
 .PRECIOUS: $(TARGET_EXEC) $(OBJECTS)
 
 $(TARGET_EXEC): $(OBJECTS)
-	$(CC) $(OBJECTS) $(LIBS) -o $@
+	$(CC) $(OBJECTS) $(LIBS) -o $@ -lgsl -lgslcblas
+
 
 clean: clean_player_data
 	-rm -f *.o
@@ -45,5 +46,9 @@ check:
 	echo "OBJECTS are $(OBJECTS)"
 	echo "HEADERS are $(HEADERS)"
 
+# Just in case you don't have GSL RNG
+get_gsl:
+	sudo apt-get install libgsl-dev
+	sudo apt-get install libgsl-dbg
 
 

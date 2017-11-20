@@ -1,6 +1,8 @@
 #ifndef HANGMAN_H
 #define HANGMAN_H
 
+#define NUM_FILES 5
+
 
 #define MAX_NUM_GUESSES 6
 
@@ -15,6 +17,7 @@
 // Header for functions for checking the secret word and
 // for updating and showing the state of Hangman games
 
+char filenames[NUM_FILES][MAX_NUM_CHARS];
 
 // Struct for updating and displaying
 // the state of the Hangman game
@@ -73,7 +76,7 @@ void print_hangman_figure_line( int score, int figure_line );
 // bumber of guesses,
 // and
 // all of your previous guesses in one line
-void print_hangman_state( int secret_word_len, hangman_char_t* hm_chars, 
+void print_hangman_state( char *file_name, int secret_word_len, hangman_char_t* hm_chars, 
       int score, char **prev_guesses );
 
 
@@ -83,6 +86,7 @@ void print_hangman_state( int secret_word_len, hangman_char_t* hm_chars,
 // return 1, otherwise return 0
 int is_secret_line_valid( char *secret_line );
 
+void get_file_name( char* file_name, unsigned int seed );
 
 // Uses rand() after it is seeded to select a line number in file_name
 // to ve the secret word. Sets a pointer to a character array of that word
