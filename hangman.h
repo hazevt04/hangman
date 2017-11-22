@@ -10,6 +10,7 @@
 // Hangman figure
 #define NUM_FIGURE_LINES 3
 
+
 // Project 1- COMP 3220
 // Glenn Hazelwood
 // 2017/10/28
@@ -17,7 +18,7 @@
 // Header for functions for checking the secret word and
 // for updating and showing the state of Hangman games
 
-char filenames[NUM_FILES][MAX_NUM_CHARS];
+
 
 // Struct for updating and displaying
 // the state of the Hangman game
@@ -76,7 +77,7 @@ void print_hangman_figure_line( int score, int figure_line );
 // bumber of guesses,
 // and
 // all of your previous guesses in one line
-void print_hangman_state( char *file_name, int secret_word_len, hangman_char_t* hm_chars, 
+void print_hangman_state( char *category_name, int secret_word_len, hangman_char_t* hm_chars, 
       int score, char **prev_guesses );
 
 
@@ -86,11 +87,13 @@ void print_hangman_state( char *file_name, int secret_word_len, hangman_char_t* 
 // return 1, otherwise return 0
 int is_secret_line_valid( char *secret_line );
 
-void get_file_name( char* file_name, unsigned int seed );
+// Pick a category (all lowercase). There should then be 
+// a <category_name>.txt file in the .input_files directory
+void get_category_name( char* file_name, unsigned int seed );
 
 // Uses rand() after it is seeded to select a line number in file_name
 // to ve the secret word. Sets a pointer to a character array of that word
-void get_secret_word( char* secret_word, char* file_name, unsigned int seed );
+void get_secret_word( char* secret_word, char* category_name, unsigned int seed );
 
 // Save the guess line to later display all of the previous guesses
 void save_guess( char** prev_guesses, char* guess_line, int guess_line_len, int num_guesses );

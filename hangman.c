@@ -171,12 +171,17 @@ void print_hangman_figure_line( int score, int figure_line ) {
 // bumber of guesses,
 // and
 // all of your previous guesses
-void print_hangman_state( char *file_name, int secret_word_len, hangman_char_t* hm_chars, 
+void print_hangman_state( char *category_name, int secret_word_len, hangman_char_t* hm_chars, 
       int score, char **prev_guesses ) {
-   
+  
+   assert( category_name != NULL );
+   assert( hm_chars != NULL );
+   assert( prev_guesses != NULL );
+   assert( *prev_guesses != NULL );
+
    // Output Line 0
    print_hangman_figure_line( score, 0 );
-   printf( "Category %s- %d letters.", file_name, secret_word_len );
+   printf( "Category: %s  %d letters.", category_name, secret_word_len );
    printf( "\n" ); 
       
    // Output Line 1
@@ -228,71 +233,82 @@ int is_secret_line_valid( char *secret_line ) {
 
 
 // Uses gsl_rand to select word file
-void get_file_name( char* file_name, unsigned int seed ) {
+void get_category_name( char* category_name, unsigned int seed ) {
    
-   assert( file_name != NULL );
+   assert( category_name != NULL );
 
+   char categories[NUM_FILES][MAX_NUM_CHARS];
+   
+   int rand_index;
+   
    gsl_rng *rng = gsl_rng_alloc( gsl_rng_taus );
 
-   sprintf( filenames[0], "%s/.inputfiles/cars.txt", getenv( "PWD" ) );
-   sprintf( filenames[1], "%s/.inputfiles/classroom.txt", getenv( "PWD" ) );
-   sprintf( filenames[2], "%s/.inputfiles/kitchen.txt", getenv( "PWD" ) );
-   sprintf( filenames[3], "%s/.inputfiles/fruits.txt", getenv( "PWD" ) );
-   sprintf( filenames[4], "%s/.inputfiles/candy.txt", getenv( "PWD" ) ); 
+   strcpy( categories[0], "cars" );
+   strcpy( categories[1], "classroom" );
+   strcpy( categories[2], "kitchen" );
+   strcpy( categories[3], "fruits" );
+   strcpy( categories[4], "candy" ); 
 
-   int rand_index;
 
    gsl_rng_set( rng, time( NULL ) );
 
    rand_index = gsl_rng_uniform_int( rng, NUM_FILES );
    printf( "Index is %d\n", rand_index );  
-   strcpy( file_name, filenames[rand_index] ); 
-   HDEBUG_PRINTF( "Selected random filename is %s.\n", file_name ); 
-   printf( "Selected random filename is %s.\n", file_name ); 
+   strcpy( category_name, categories[rand_index] ); 
+   HDEBUG_PRINTF( "Selected random category is %s.\n", category_name ); 
+   printf( "Selected random category is %s.\n", category_name ); 
 
 }
 
 
 // Uses gsl_rand() after it is seeded to select a line number in file_name
 // to ve the secret word. Sets a pointer to a character array of that word
-void get_secret_word( char* secret_word, char* file_name, unsigned int seed ) {
+void get_secret_word( char* secret_word, char* category_name, unsigned int seed ) {
 
    assert( secret_word != NULL );
-   assert( file_name != NULL );
+   assert( category_name != NULL );
 
    int secret_line_num = -1;
    int num_file_lines = 0;
    char secret_line[MAX_NUM_CHARS];
+   
+
+   char secret_word_path[MAX_NUM_CHARS];
    FILE* fp;
 
-   fp = fopen( file_name, "r" );
+   sprintf( secret_word_path, "%s/.inputfiles/%s.txt", getenv( "PWD" ), category_name );
+
+   HDEBUG_PRINTF( "Inside %s(): secret word path is %s\n", __func__, secret_word_path );   
+
+   fp = fopen( secret_word_path, "r" );
    if ( !fp ) {
       HDEBUG_PRINTF( "All Characters in the file name: \n" ); 
       for( int i=0; i < MAX_NUM_CHARS; i++ ) {
-         HDEBUG_PRINTF( "Inside %s(): \t%d: %c(%d)\n", __func__, i, file_name[i], 
-               file_name[i] ); 
+         HDEBUG_PRINTF( "Inside %s(): \t%d: %c(%d)\n", __func__, i, secret_word_path[i], 
+               secret_word_path[i] ); 
       } 
       HDEBUG_PRINTF( "\n" ); 
-      HDEBUG_PRINTF( "Inside %s(): strlen(file_name) is %zu\n", __func__, 
-            strlen( file_name ) ); 
+      HDEBUG_PRINTF( "Inside %s(): strlen(secret_word_path) is %zu\n", __func__, 
+            strlen( secret_word_path ) ); 
 
       if ( errno == ENOENT ) {
-         fprintf( stderr, "ERROR: The file %s was not found.\n", file_name );
+         fprintf( stderr, "ERROR: The file %s was not found.\n", secret_word_path );
       } else {
-         fprintf( stderr, "ERROR: The file %s could not be opened.\n", file_name );
+         fprintf( stderr, "ERROR: The file %s could not be opened.\n", secret_word_path );
       }
+      fclose( fp );
       exit( EXIT_FAILURE );
    }
 
-   HDEBUG_PRINTF( "Inside %s(): file_name is %s\n", __func__, file_name );
+   HDEBUG_PRINTF( "Inside %s(): secret_word_path is %s\n", __func__, secret_word_path );
    HDEBUG_PRINTF( "All Characters in the file name: \n" ); 
    for( int i = 0; i < MAX_NUM_CHARS; i++ ) {
-      HDEBUG_PRINTF( "Inside %s(): \t%d: %c(%d)\n", __func__, i, file_name[i], 
-            file_name[i] ); 
+      HDEBUG_PRINTF( "Inside %s(): \t%d: %c(%d)\n", __func__, i, secret_word_path[i], 
+            secret_word_path[i] ); 
    } 
    HDEBUG_PRINTF( "\n" ); 
-   HDEBUG_PRINTF( "Inside %s(): strlen(file_name) is %zu\n", __func__, 
-         strlen( file_name ) );    
+   HDEBUG_PRINTF( "Inside %s(): strlen(secret_word_path) is %zu\n", __func__, 
+         strlen( secret_word_path ) );    
    
    get_num_file_lines( &num_file_lines, fp );
   
@@ -311,7 +327,7 @@ void get_secret_word( char* secret_word, char* file_name, unsigned int seed ) {
             __func__, secret_line_num ); 
   
       HDEBUG_PRINTF( "Inside %s(): Reading line num %d from %s\n", 
-            __func__, secret_line_num, file_name );  
+            __func__, secret_line_num, secret_word_path );  
    
       get_file_line( secret_line, secret_line_num, fp );
       secret_line_valid = is_secret_line_valid( secret_line );
@@ -323,7 +339,7 @@ void get_secret_word( char* secret_word, char* file_name, unsigned int seed ) {
 
          fprintf( stderr, "ERROR: The secret line file %s has 1 line "
             "and it is invalid:\n%s\n\n",
-            file_name, secret_line );
+            secret_word_path, secret_line );
          printf( "Exiting.\n\n" );
          exit( EXIT_FAILURE ); 
       }
@@ -331,7 +347,7 @@ void get_secret_word( char* secret_word, char* file_name, unsigned int seed ) {
       if ( ( num_bad_lines == num_file_lines ) && ( !secret_line_valid ) ) {
          fprintf( stderr, "ERROR: The secret line file %s has %d lines "
             "and we've tried %d times to find a good line.\n\n",
-            file_name, num_file_lines, num_bad_lines);
+            secret_word_path, num_file_lines, num_bad_lines);
          printf( "Exiting.\n\n" );
          exit( EXIT_FAILURE ); 
       }

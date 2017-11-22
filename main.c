@@ -33,7 +33,7 @@ int main( int argc, char** argv ) {
    char guess_char;
    char guess_line[MAX_NUM_CHARS];
 
-   char file_name[MAX_NUM_CHARS];
+   char category_name[MAX_NUM_CHARS];
    char file_line[MAX_NUM_CHARS];
 
    char **prev_guesses;
@@ -52,10 +52,10 @@ int main( int argc, char** argv ) {
    /////////////////////////
 
    // Use the CPU time to seed the RNG for selecting the secret word
-   get_file_name( file_name, seed );
-   HDEBUG_PRINTF( "Inside %s(): file_name is %s\n", __func__, file_name ); 
-   HDEBUG_PRINTF( "Inside %s(): strlen for file_name is %zu\n", __func__, strlen( file_name ) ); 
-   get_secret_word( secret_word, file_name, seed );
+   get_category_name( category_name, seed );
+   HDEBUG_PRINTF( "Inside %s(): category_name is %s\n", __func__, category_name ); 
+   HDEBUG_PRINTF( "Inside %s(): strlen for category_name is %zu\n", __func__, strlen( category_name ) ); 
+   get_secret_word( secret_word, category_name, seed );
      
    secret_word_len = strlen( secret_word );
    
@@ -107,14 +107,14 @@ int main( int argc, char** argv ) {
       HDEBUG_PRINTF( "Inside %s(): The secret word has %d characters.\n\n\n", __func__, secret_word_len ); 
       HDEBUG_PRINTF( "Inside %s(): You have %d guesses left\n", __func__, ( MAX_NUM_GUESSES - score ) ); 
      
-      system("cls") && system("clear");
+      system( "cls" ) && system( "clear" );
 
       // Print player stats
       print_player_data( &player_data );
       printf("\n"); 
 
       // Show the overall state of the game
-      print_hangman_state( file_name, secret_word_len, hm_chars, score, prev_guesses );
+      print_hangman_state( category_name, secret_word_len, hm_chars, score, prev_guesses );
 
 
       /////////////////////
@@ -155,7 +155,7 @@ int main( int argc, char** argv ) {
             printf("\n"); 
             
             // Show the overall state of the game
-            print_hangman_state( file_name, secret_word_len, hm_chars, score, prev_guesses );
+            print_hangman_state( category_name, secret_word_len, hm_chars, score, prev_guesses );
             
             printf( "     You LOSE!\n" ); 
             printf( "     The word was " );
@@ -207,7 +207,7 @@ int main( int argc, char** argv ) {
             print_player_data( &player_data );
             printf("\n"); 
 
-            print_hangman_state( file_name, secret_word_len, hm_chars, score, prev_guesses );
+            print_hangman_state( category_name, secret_word_len, hm_chars, score, prev_guesses );
             
             printf( "     You WIN! You had %d %s.\n\n", score,
 		         ( score == 1 ? "miss" : "misses" ) ); 
@@ -241,7 +241,7 @@ int main( int argc, char** argv ) {
             printf("\n"); 
             
             // Show the overall state of the game
-            print_hangman_state( file_name, secret_word_len, hm_chars, score, prev_guesses );
+            print_hangman_state( category_name, secret_word_len, hm_chars, score, prev_guesses );
             
             printf( "     You LOSE!\n" ); 
             printf( "     The word was " );
