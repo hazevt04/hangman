@@ -1,14 +1,24 @@
 #ifndef HANGMAN_H
 #define HANGMAN_H
 
-#define NUM_FILES 5
+#define NUM_FILES 8
 
-
-#define MAX_NUM_GUESSES 6
+#define MAX_NUM_GUESSES 6 
 
 // Number of Lines for the 
 // Hangman figure
 #define NUM_FIGURE_LINES 3
+
+static char categories[][MAX_NUM_CHARS] = {
+	"cars",
+	"classroom",
+	"kitchen",
+	"fruits",
+	"candy", 
+	"nbateams", 
+	"nflteams", 
+	"scifimovies" 
+   };
 
 
 // Project 1- COMP 3220
@@ -19,13 +29,18 @@
 // for updating and showing the state of Hangman games
 
 
-
 // Struct for updating and displaying
 // the state of the Hangman game
 typedef struct {
    int guessed;
+   int is_space;
    char c;
 } hangman_char_t;
+
+
+// Count the number of spaces to factor into check of number of characters'
+// guessed
+void get_num_spaces( int *num_spaces, hangman_char_t *hm_chars, int num_chars );
 
 
 // Sets the hangman char array chars based on the secret word and
@@ -53,6 +68,7 @@ void update_hangman_char_array( hangman_char_t *hm_chars, int* indices,
 // The function expects the caller to allocate hm_chars and match_indices
 int check_guess( hangman_char_t *hm_chars, int* match_indices, int num_chars, 
       char guess_char );
+
 
 // Print one line with all of your previous guesses, each one in single quotes
 void print_prev_guesses( char **prev_guesses, int num_prev_guesses ); 
@@ -87,15 +103,19 @@ void print_hangman_state( char *category_name, int secret_word_len, hangman_char
 // return 1, otherwise return 0
 int is_secret_line_valid( char *secret_line );
 
+
 // Pick a category (all lowercase). There should then be 
 // a <category_name>.txt file in the .input_files directory
 void get_category_name( char* file_name, unsigned int seed );
+
 
 // Uses rand() after it is seeded to select a line number in file_name
 // to ve the secret word. Sets a pointer to a character array of that word
 void get_secret_word( char* secret_word, char* category_name, unsigned int seed );
 
+
 // Save the guess line to later display all of the previous guesses
 void save_guess( char** prev_guesses, char* guess_line, int guess_line_len, int num_guesses );
+
 
 #endif // HANGMAN_H
