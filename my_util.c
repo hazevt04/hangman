@@ -61,7 +61,7 @@ int get_file_line( char *file_line, int line_num, FILE *fp ) {
    HDEBUG_PRINTF( "Inside %s(): We wanted line %d.\n", __func__, line_num ); 
    HDEBUG_PRINTF( "Inside %s(): We got line %d: %s\n", __func__, line_count, line ); 
 
-   strcpy( file_line, line );
+   sprintf( file_line, "%s", line );
 
    HDEBUG_PRINTF( "Inside %s(): file line set to %s\n", __func__, file_line ); 
 

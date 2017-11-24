@@ -30,10 +30,16 @@ void set_hangman_char_array( hangman_char_t *hm_chars, char* secret_word,
    assert( secret_word != NULL );
 
    for( int i = 0; i < num_chars; i++ ) {
-      hm_chars[i].guessed = 0;
       hm_chars[i].c = secret_word[i];
-   } 
-}
+      if ( secret_word[i] == ' ' ) {
+         hm_chars[i].is_space = 1;
+         hm_chars[i].guessed = 1;
+      } else {
+         hm_chars[i].is_space = 0;
+         hm_chars[i].guessed = 0;
+      }
+   } // end of for loop
+} // set_hangman_char_array
 
 
 // Set the hangman char array chars to NULL characters and
@@ -43,8 +49,12 @@ void clear_hangman_char_array( hangman_char_t *hm_chars, int num_chars ) {
    assert( hm_chars != NULL );
 
    for( int i = 0; i < num_chars; i++ ) {
-      hm_chars[i].guessed = 0;
       hm_chars[i].c = 0;
+      if ( hm_chars[i].is_space ) {
+         hm_chars[i].guessed = 1;
+      } else {
+         hm_chars[i].guessed = 0;
+      }
    } 
 }
 
@@ -203,8 +213,8 @@ void print_hangman_state( char *category_name, int secret_word_len, hangman_char
 
 
 // Check whether the candidate secret line
-// has non-alphabetic characters or not
-// It it does have non-alphabetic characters
+// has non-alphabetic/non-spaces characters or not
+// It it does have non-alphabetic/non-space characters
 // return 1, otherwise return 0
 int is_secret_line_valid( char *secret_line ) {
    
@@ -219,9 +229,9 @@ int is_secret_line_valid( char *secret_line ) {
    HDEBUG_PRINTF( "Secret_line characters: " ); 
    while (  *l_ptr != '\0' ) {
       HDEBUG_PRINTF("%c ", *l_ptr ); 
-      if ( !isalpha( ( int )( *l_ptr ) ) ) {
+      if ( ( !isalpha( ( int )( *l_ptr ) ) && ( *l_ptr != ' ' ) ) ) {
          HDEBUG_PRINTF( "Inside %s(): \n\t\tsecret_line character %c "
-            "is not an alphabet.\n", __func__, *l_ptr ); 
+            "is not an alphabet or space.\n", __func__, *l_ptr ); 
          return 0;
       }
       l_ptr++;
@@ -357,7 +367,7 @@ void get_secret_word( char* secret_word, char* category_name, unsigned int seed 
    } // end of while ( !secret_line_valid )
 
    // Basically renaming the variable 'secret_line' to 'secret_word'
-   strcpy( secret_word, secret_line );
+   sprintf( secret_word, "%s", secret_line );
    
    HDEBUG_PRINTF( "Inside %s(): Shhh... The secret word is %s\n", 
          __func__, secret_word ); 

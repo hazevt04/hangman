@@ -24,6 +24,7 @@
 // the state of the Hangman game
 typedef struct {
    int guessed;
+   int is_space;
    char c;
 } hangman_char_t;
 
