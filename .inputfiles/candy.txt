@@ -1,7 +1,7 @@
 Skittles
-KitKat
-MandMs
-Blowpops
+Kit Kat
+M and Ms
+Blow Pop
 Kisses
 Whoppers
 Starbursts
@@ -10,9 +10,10 @@ Milky Way
 Now N Laters
 Nerds
 Gobstoppers
-Tootsierolls
+Tootsie Roll
 Almond Joy
 Butterfingers
+Baby Ruth
 Three Musketeers
 Reeses Pieces
 Reeses Cups

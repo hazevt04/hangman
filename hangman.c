@@ -254,7 +254,6 @@ int is_secret_line_valid( char *secret_line ) {
 } // end of is_secret_line_valid()
 
 
-
 // Uses gsl_rand to select word file
 void get_category_name( char* category_name, unsigned int seed ) {
    
@@ -271,7 +270,9 @@ void get_category_name( char* category_name, unsigned int seed ) {
    strcpy( categories[2], "kitchen" );
    strcpy( categories[3], "fruits" );
    strcpy( categories[4], "candy" ); 
-
+   strcpy( categories[5], "nbateams" ); 
+   strcpy( categories[6], "nflteams" ); 
+   strcpy( categories[7], "scifimovies" ); 
 
    gsl_rng_set( rng, time( NULL ) );
 
@@ -407,4 +408,4 @@ void save_guess( char** prev_guesses, char* guess_line, int guess_line_len, int 
          __func__, num_guesses, i, prev_guesses[num_guesses][i] );
    } 
    prev_guesses[num_guesses][guess_line_len] = '\0';  
-}
+} // save_guess()
