@@ -28,6 +28,9 @@ typedef struct {
    char c;
 } hangman_char_t;
 
+// Count the number of spaces to factor into check of number of characters'
+// guessed
+void get_num_spaces( int *num_spaces, hangman_char_t *hm_chars, int num_chars );
 
 // Sets the hangman char array chars based on the secret word and
 // none of the characters having been guessed

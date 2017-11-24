@@ -21,6 +21,19 @@
 // Implementations for functions for checking the secret word and
 // for updating and showing the state of Hangman games
 
+// Count number of spaces in secret word
+void get_num_spaces( int *num_spaces, hangman_char_t *hm_chars, int num_chars ) {
+   assert( hm_chars != NULL );
+
+   int nspaces = 0;
+   for( int i = 0; i < num_chars; i++ ) {
+      if ( hm_chars[i].is_space ) {
+         nspaces++;
+      }
+   }
+   *num_spaces = nspaces;
+}
+
 // Sets the hangman char array chars based on the secret word and
 // none of the characters having been guessed
 void set_hangman_char_array( hangman_char_t *hm_chars, char* secret_word, 
