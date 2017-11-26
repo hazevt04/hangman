@@ -1,7 +1,7 @@
 #ifndef HANGMAN_H
 #define HANGMAN_H
 
-#define NUM_FILES 8
+#define NUM_FILES 12
 
 #define MAX_NUM_GUESSES 6 
 
@@ -10,14 +10,18 @@
 #define NUM_FIGURE_LINES 3
 
 static char categories[][MAX_NUM_CHARS] = {
-	"cars",
-	"classroom",
-	"kitchen",
-	"fruits",
 	"candy", 
+	"cars",
+   "colleges",
+	"classroom",
+	"fruits",
+	"kitchen",
 	"nbateams", 
 	"nflteams", 
-	"scifimovies" 
+   "tools",
+	"scifimovies", 
+   "comedymovies",
+   "soda"
    };
 
 
