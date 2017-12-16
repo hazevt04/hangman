@@ -265,14 +265,18 @@ void get_category_name( char* category_name, unsigned int seed ) {
    
    gsl_rng *rng = gsl_rng_alloc( gsl_rng_taus );
 
-   strcpy( categories[0], "cars" );
-   strcpy( categories[1], "classroom" );
-   strcpy( categories[2], "kitchen" );
-   strcpy( categories[3], "fruits" );
-   strcpy( categories[4], "candy" ); 
-   strcpy( categories[5], "nbateams" ); 
-   strcpy( categories[6], "nflteams" ); 
-   strcpy( categories[7], "scifimovies" ); 
+   strcpy( categories[0],  "candy" ); 
+   strcpy( categories[1],  "cars" );
+   strcpy( categories[2],  "classroom" );
+   strcpy( categories[3],  "college" ); 
+   strcpy( categories[4],  "comedymovies" ); 
+   strcpy( categories[5],  "fruit" );
+   strcpy( categories[6],  "kitchen" );
+   strcpy( categories[7],  "nbateams" ); 
+   strcpy( categories[8],  "nflteams" ); 
+   strcpy( categories[9],  "scifimovies" ); 
+   strcpy( categories[10], "soda" ); 
+   strcpy( categories[11], "tools" ); 
 
    gsl_rng_set( rng, time( NULL ) );
 
