@@ -51,4 +51,8 @@ check:
 	echo "OBJECTS are $(OBJECTS)"
 	echo "HEADERS are $(HEADERS)"
 
+# Just in case you don't have GSL RNG
+get_gsl:
+	sudo apt-get install libgsl-dev
+	sudo apt-get install libgsl-dbg
 

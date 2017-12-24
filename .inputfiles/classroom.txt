@@ -1,0 +1,15 @@
+chalkboard
+desks
+erasers
+pencils
+crayons
+glue
+pens
+paper
+cabinets
+shelves
+chairs
+books
+chalk
+projector
+computer

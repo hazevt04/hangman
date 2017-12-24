@@ -101,7 +101,7 @@ void read_player_data_from_file( char* file_name, player_data_t *player_data ) {
          HDEBUG_PRINTF( "Inside %s(): \t%d: %c(%d)\n", __func__, i, file_name[i], file_name[i] ); 
       } 
       HDEBUG_PRINTF( "\n" ); 
-      HDEBUG_PRINTF( "Inside %s(): strlen(file_name) is %u\n", __func__, strlen( file_name ) ); 
+      HDEBUG_PRINTF( "Inside %s(): strlen(file_name) is %zu\n", __func__, strlen( file_name ) ); 
 
       perror( "ERROR: " );
       exit( EXIT_FAILURE );
@@ -113,7 +113,7 @@ void read_player_data_from_file( char* file_name, player_data_t *player_data ) {
       HDEBUG_PRINTF( "Inside %s(): \t%d: %c(%d)\n", __func__, i, file_name[i], file_name[i] ); 
    } 
    HDEBUG_PRINTF( "\n" ); 
-   HDEBUG_PRINTF( "Inside %s(): strlen(file_name) is %u\n", __func__, strlen( file_name ) );    
+   HDEBUG_PRINTF( "Inside %s(): strlen(file_name) is %zu\n", __func__, strlen( file_name ) );    
    
    while( ( fread( player_data, sizeof( player_data_t ), 1, fp ) > 0 ) ) {} 
    fclose( fp );
