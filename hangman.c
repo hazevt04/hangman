@@ -259,25 +259,15 @@ void get_category_name( char* category_name, unsigned int seed ) {
    
    assert( category_name != NULL );
 
-   char categories[NUM_FILES][MAX_NUM_CHARS];
-   
    int rand_index;
    
    gsl_rng *rng = gsl_rng_alloc( gsl_rng_taus );
 
-   strcpy( categories[0], "cars" );
-   strcpy( categories[1], "classroom" );
-   strcpy( categories[2], "kitchen" );
-   strcpy( categories[3], "fruits" );
-   strcpy( categories[4], "candy" ); 
-   strcpy( categories[5], "nbateams" ); 
-   strcpy( categories[6], "nflteams" ); 
-   strcpy( categories[7], "scifimovies" ); 
-
    gsl_rng_set( rng, time( NULL ) );
 
-   rand_index = gsl_rng_uniform_int( rng, NUM_FILES );
-   printf( "Index is %d\n", rand_index );  
+   rand_index = gsl_rng_uniform_int( rng, NUM_CATEGORY_FILES );
+   HDEBUG_PRINTF( "Index is %d\n", rand_index );  
+
    strcpy( category_name, categories[rand_index] ); 
    HDEBUG_PRINTF( "Selected random category is %s.\n", category_name ); 
    printf( "Selected random category is %s.\n", category_name ); 
