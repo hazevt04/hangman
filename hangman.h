@@ -11,16 +11,16 @@
 #define NUM_CATEGORY_FILES 12
 
 static char categories[][MAX_NUM_CHARS] = {
-	"candy", 
-	"cars",
-	"classroom",
+   "candy", 
+   "cars",
+   "classroom",
    "colleges",
    "comedymovies",
-	"fruit",
-	"kitchen",
-	"nbateams", 
-	"nflteams", 
-	"scifimovies", 
+   "fruit",
+   "kitchen",
+   "nbateams", 
+   "nflteams", 
+   "scifimovies", 
    "soda",
    "tools"
    };
