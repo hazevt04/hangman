@@ -3,16 +3,52 @@ University of Maryland
 Norfolk State University
 Old Dominion University
 Hampton University
-Massachusetts Institute of Technology
 Spellman College
 Morehouse College
 Bethune Cookman University
-Florida A and M University
+Florida A & M University
 Howard University
 Ohio State University
 University of Michigan
 University of Virginia
 University of Texas
-Harvard College
+University of Tennessee
+Texas A & M University
+Mississipi State
+Louisiana State University
+University of Alabama
+Florida State
+University of Miami
+Georgia Tech
+West Virginia University
+University of Pittsburgh
+University of North Carolina
+North Carolina State University
+Wake Forest University
+University of Kansas
+University of Kentucky
+University of Colorado
+Oklahoma State University
+Oklahoma University
+University of Nevada Las Vegas
+University of Southern California
+University of California Los Angeles
+University of California Berkley
+Auburn University
+Villanova University
+Boston College
+Cornell University
+Brown University
+Georgetown University
+Northwestern University
+Dartmouth College
+Drexel University
+California Institute of Technology
+Stanford University
+Carnegie Mellon University
+Massachusetts Institute of Technology
 Yale College
 Princeton University
+Harvard College
+University of Cambridge
+University of Oxford
