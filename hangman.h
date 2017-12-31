@@ -39,14 +39,14 @@ static char categories[][MAX_NUM_CHARS] = {
 // the state of the Hangman game
 typedef struct {
    int guessed;
-   int is_space;
+   int is_non_alpha;
    char c;
 } hangman_char_t;
 
 
-// Count the number of spaces to factor into check of number of characters'
+// Count the number of non-alphabet characters to factor into check of number of characters'
 // guessed
-void get_num_spaces( int *num_spaces, hangman_char_t *hm_chars, int num_chars );
+void get_num_non_alphas( int *num_non_alpha, hangman_char_t *hm_chars, int num_chars );
 
 
 // Sets the hangman char array chars based on the secret word and

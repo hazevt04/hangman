@@ -21,18 +21,21 @@
 // Implementations for functions for checking the secret word and
 // for updating and showing the state of Hangman games
 
-// Count number of spaces in secret word
-void get_num_spaces( int *num_spaces, hangman_char_t *hm_chars, int num_chars ) {
+// Count number of non_alphas in secret word
+void get_num_non_alphas( int *num_non_alphas, hangman_char_t *hm_chars, int num_chars ) {
    assert( hm_chars != NULL );
 
-   int nspaces = 0;
+   int nnon_alphas = 0;
    for( int i = 0; i < num_chars; i++ ) {
-      if ( hm_chars[i].is_space ) {
-         nspaces++;
+      if ( hm_chars[i].is_non_alpha ) {
+         nnon_alphas++;
       }
    }
-   *num_spaces = nspaces;
+   *num_non_alphas = nnon_alphas;
 }
+
+
+
 
 // Sets the hangman char array chars based on the secret word and
 // none of the characters having been guessed
@@ -44,12 +47,12 @@ void set_hangman_char_array( hangman_char_t *hm_chars, char* secret_word,
 
    for( int i = 0; i < num_chars; i++ ) {
       hm_chars[i].c = secret_word[i];
-      if ( secret_word[i] == ' ' ) {
-         hm_chars[i].is_space = 1;
-         hm_chars[i].guessed = 1;
-      } else {
-         hm_chars[i].is_space = 0;
+      if ( isalpha( ( int )( secret_word[i] ) ) ) {
+         hm_chars[i].is_non_alpha = 0;
          hm_chars[i].guessed = 0;
+      } else {
+         hm_chars[i].is_non_alpha = 1;
+         hm_chars[i].guessed = 1;
       }
    } // end of for loop
 } // set_hangman_char_array
@@ -63,7 +66,7 @@ void clear_hangman_char_array( hangman_char_t *hm_chars, int num_chars ) {
 
    for( int i = 0; i < num_chars; i++ ) {
       hm_chars[i].c = 0;
-      if ( hm_chars[i].is_space ) {
+      if ( hm_chars[i].is_non_alpha ) {
          hm_chars[i].guessed = 1;
       } else {
          hm_chars[i].guessed = 0;
@@ -226,8 +229,8 @@ void print_hangman_state( char *category_name, int secret_word_len, hangman_char
 
 
 // Check whether the candidate secret line
-// has non-alphabetic/non-spaces characters or not
-// It it does have non-alphabetic/non-space characters
+// has non-alphabetic/non-non_alphas characters or not
+// It it does have non-alphabetic/non-non_alpha characters
 // return 1, otherwise return 0
 int is_secret_line_valid( char *secret_line ) {
    
@@ -242,9 +245,9 @@ int is_secret_line_valid( char *secret_line ) {
    HDEBUG_PRINTF( "Secret_line characters: " ); 
    while (  *l_ptr != '\0' ) {
       HDEBUG_PRINTF("%c ", *l_ptr ); 
-      if ( ( !isalpha( ( int )( *l_ptr ) ) && ( *l_ptr != ' ' ) ) ) {
-         HDEBUG_PRINTF( "Inside %s(): \n\t\tsecret_line character %c "
-            "is not an alphabet or space.\n", __func__, *l_ptr ); 
+      if ( ( !isprint( ( int )( *l_ptr ) ) ) ) {
+         HDEBUG_PRINTF( "Inside %s(): \n\t\tsecret_line character %x "
+            "is not a printable character.\n", __func__, ( int )( *l_ptr ) ); 
          return 0;
       }
       l_ptr++;
@@ -266,6 +269,11 @@ void get_category_name( char* category_name, unsigned int seed ) {
    gsl_rng_set( rng, time( NULL ) );
 
    rand_index = gsl_rng_uniform_int( rng, NUM_CATEGORY_FILES );
+   
+#ifdef TEST
+   rand_index = 0;
+#endif   
+
    HDEBUG_PRINTF( "Index is %d\n", rand_index );  
 
    strcpy( category_name, categories[rand_index] ); 
@@ -286,7 +294,6 @@ void get_secret_word( char* secret_word, char* category_name, unsigned int seed 
    int num_file_lines = 0;
    char secret_line[MAX_NUM_CHARS];
    
-
    char secret_word_path[MAX_NUM_CHARS];
    FILE* fp;
 
@@ -332,7 +339,13 @@ void get_secret_word( char* secret_word, char* category_name, unsigned int seed 
    gsl_rng_set( rng, time( NULL ) );
 
    while ( !secret_line_valid ) {
+   
       secret_line_num = gsl_rng_uniform_int( rng, num_file_lines );
+
+#ifdef TEST
+      secret_line_num = 0;
+#endif
+
 
       HDEBUG_PRINTF( "seed is %u\n", seed );
       HDEBUG_PRINTF( "secret_line_num is %d\n", secret_line_num );

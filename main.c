@@ -25,7 +25,7 @@ int main( int argc, char** argv ) {
    
    int *match_indices;
    int num_matches = 0;
-   int num_spaces = 0;
+   int num_non_alphas = 0;
    int num_total_matches = 0;
 
    char secret_word[MAX_NUM_CHARS];
@@ -68,8 +68,8 @@ int main( int argc, char** argv ) {
 
    set_hangman_char_array( hm_chars, secret_word, secret_word_len );
 
-   get_num_spaces( &num_spaces, hm_chars, secret_word_len );
-   HDEBUG_PRINTF( "Inside %s() There are %d spaces\n", __func__, num_spaces ); 
+   get_num_non_alphas( &num_non_alphas, hm_chars, secret_word_len );
+   HDEBUG_PRINTF( "Inside %s() There are %d non_alphas\n", __func__, num_non_alphas ); 
    num_total_matches = 0;
 
    ////////////////////////////////////
@@ -199,7 +199,7 @@ int main( int argc, char** argv ) {
          ///////////////////////// 
          // USER WON
          ///////////////////////// 
-         if ( ( secret_word_len - num_total_matches - num_spaces ) == 0 ) {
+         if ( ( secret_word_len - num_total_matches - num_non_alphas ) == 0 ) {
             end_time = clock();
             duration = ( (double)end_time - (double)start_time );
             HDEBUG_PRINTF( "Inside %s(): end_time is %f\n", __func__, (double)end_time ); 
