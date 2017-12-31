@@ -1,7 +1,6 @@
 #ifndef HANGMAN_H
 #define HANGMAN_H
 
-#define NUM_FILES 12
 
 #define MAX_NUM_GUESSES 6 
 
@@ -9,20 +8,23 @@
 // Hangman figure
 #define NUM_FIGURE_LINES 3
 
+#define NUM_CATEGORY_FILES 12
+
 static char categories[][MAX_NUM_CHARS] = {
 	"candy", 
 	"cars",
-   "colleges",
 	"classroom",
-	"fruits",
+   "colleges",
+   "comedymovies",
+	"fruit",
 	"kitchen",
 	"nbateams", 
 	"nflteams", 
-   "tools",
 	"scifimovies", 
-   "comedymovies",
-   "soda"
+   "soda",
+   "tools"
    };
+
 
 
 // Project 1- COMP 3220

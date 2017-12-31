@@ -48,6 +48,8 @@ int main( int argc, char** argv ) {
    hangman_char_t *hm_chars;
    player_data_t player_data;
 
+   //init_categories();
+
    /////////////////////////
    // GET THE SECRET WORD
    /////////////////////////
