@@ -35,8 +35,6 @@ void get_num_non_alphas( int *num_non_alphas, hangman_char_t *hm_chars, int num_
 }
 
 
-
-
 // Sets the hangman char array chars based on the secret word and
 // none of the characters having been guessed
 void set_hangman_char_array( hangman_char_t *hm_chars, char* secret_word, 

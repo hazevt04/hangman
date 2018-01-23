@@ -10,20 +10,33 @@
 
 #define NUM_CATEGORY_FILES 12
 
+//"Candy", 
+//"Cars",
+//"Classroom",
+//"Colleges",
+//"Comedy Movies",
+//"Fruit",
+//"Kitchen",
+//"NBA Teams", 
+//"NFL Teams", 
+//"Science Fiction Movies", 
+//"Soda",
+//"Tools",
+
 static char categories[][MAX_NUM_CHARS] = {
-   "candy", 
-   "cars",
-   "classroom",
-   "colleges",
-   "comedymovies",
-   "fruit",
-   "kitchen",
-   "nbateams", 
-   "nflteams", 
-   "scifimovies", 
-   "soda",
-   "tools"
-   };
+   "Candy", 
+   "Cars",
+   "Classroom",
+   "Colleges",
+   "Comedy Movies",
+   "Fruit",
+   "Kitchen",
+   "NBA Teams", 
+   "NFL Teams", 
+   "Science Fiction Movies", 
+   "Soda",
+   "Tools"
+};
 
 
 
@@ -33,6 +46,28 @@ static char categories[][MAX_NUM_CHARS] = {
 
 // Header for functions for checking the secret word and
 // for updating and showing the state of Hangman games
+typedef enum int category_t{
+	CANDY,
+	CARS,
+	CLASSROOM,
+	COLLEGES,
+	COMEDYMOVIES,
+	FRUIT,
+	KITCHEN,
+	NBATEAMS,
+	NFLTEAMS,
+	SCIFIMOVIES,
+	SODA,
+	TOOLS   
+};
+
+
+typedef struct {
+   enum  category_t category;
+   char  category_name[MAX_NUM_CHARS];
+   int   secret_word_index;
+   char  secret_word[MAX_NUM_CHARS];
+} secret_word_record_t;
 
 
 // Struct for updating and displaying
