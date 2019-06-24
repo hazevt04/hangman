@@ -20,7 +20,7 @@
 // Sets the number of lines in the file pointed to by fp
 void get_num_file_lines( int* num_lines, FILE *fp ) {
 
-   int l_num_lines;
+   int l_num_lines = 0;
    char line[MAX_NUM_CHARS];
 
    while( fgets( line, MAX_NUM_CHARS, fp ) != NULL ) {

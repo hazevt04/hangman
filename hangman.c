@@ -264,11 +264,13 @@ void get_category_name( char* category_name, unsigned int seed ) {
 
    int rand_index;
    
-   gsl_rng *rng = gsl_rng_alloc( gsl_rng_taus );
+   gsl_rng *category_name_rng = NULL;
+   gsl_rng_env_setup();
+   category_name_rng = gsl_rng_alloc( gsl_rng_taus );
 
-   gsl_rng_set( rng, time( NULL ) );
+   gsl_rng_set( category_name_rng, time( NULL ) );
 
-   rand_index = gsl_rng_uniform_int( rng, NUM_CATEGORY_FILES );
+   rand_index = gsl_rng_uniform_int( category_name_rng, NUM_CATEGORY_FILES );
    
 #ifdef TEST
    rand_index = 0;
@@ -280,6 +282,8 @@ void get_category_name( char* category_name, unsigned int seed ) {
    HDEBUG_PRINTF( "Selected random category is %s.\n", category_name ); 
    printf( "Selected random category is %s.\n", category_name ); 
 
+   gsl_rng_free( category_name_rng );
+   category_name_rng = NULL;
 }
 
 
@@ -332,20 +336,22 @@ void get_secret_word( char* secret_word, char* category_name, unsigned int seed 
          strlen( secret_word_path ) );    
    
    get_num_file_lines( &num_file_lines, fp );
+   HDEBUG_PRINTF( "Inside %s(): There are %d lines on the secret word file.\n", __func__, num_file_lines );
   
    int secret_line_valid = 0;
    int num_bad_lines = 0;
-   gsl_rng *rng = gsl_rng_alloc( gsl_rng_taus2 );
-   gsl_rng_set( rng, time( NULL ) );
+   gsl_rng *line_num_rng = NULL;
+   line_num_rng = gsl_rng_alloc( gsl_rng_taus2 );
+
+   gsl_rng_set( line_num_rng, time( NULL ) );
 
    while ( !secret_line_valid ) {
    
-      secret_line_num = gsl_rng_uniform_int( rng, num_file_lines );
+      secret_line_num = gsl_rng_uniform_int( line_num_rng, num_file_lines );
 
 #ifdef TEST
       secret_line_num = 0;
 #endif
-
 
       HDEBUG_PRINTF( "seed is %u\n", seed );
       HDEBUG_PRINTF( "secret_line_num is %d\n", secret_line_num );
@@ -389,7 +395,8 @@ void get_secret_word( char* secret_word, char* category_name, unsigned int seed 
    HDEBUG_PRINTF( "Inside %s(): Shhh... The secret word is %s\n", 
          __func__, secret_word ); 
 
-   gsl_rng_free( rng );
+   gsl_rng_free( line_num_rng );
+   line_num_rng = NULL;
 } // end of get_secret_word
 
 
